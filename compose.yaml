@@ -1,0 +1,59 @@
+#version: '3.8'
+
+services:
+  rabbitmq:
+    hostname: r1
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672" # Nach außen verfügbar
+
+  mongo1:
+    hostname: m1
+    image: mongo:7
+    command: ["mongod", "--replSet", "rs1"]
+
+  app1:
+    hostname: s1
+    image: example/crickets:latest
+    environment:
+      - spring.rabbitmq.host=r1
+      - spring.data.mongodb.host=m1
+    depends_on:
+      - rabbitmq
+      - mongo1
+    ports:
+      - "8081:8080"
+
+  mongo2:
+    hostname: m2
+    image: mongo:7
+    command: ["mongod", "--replSet", "rs2"]
+
+  app2:
+    hostname: s2
+    image: example/crickets:latest
+    environment:
+      - spring.rabbitmq.host=r1
+      - spring.data.mongodb.host=m2
+    depends_on:
+      - rabbitmq
+      - mongo2
+    ports:
+      - "8082:8080"
+
+  mongo3:
+    hostname: m3
+    image: mongo:7
+    command: ["mongod", "--replSet", "rs3"]
+
+  app3:
+    hostname: s3
+    image: example/crickets:latest
+    environment:
+      - spring.rabbitmq.host=r1
+      - spring.data.mongodb.host=m3
+    depends_on:
+      - rabbitmq
+      - mongo3
+    ports:
+      - "8083:8080"
