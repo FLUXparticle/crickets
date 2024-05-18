@@ -30,9 +30,9 @@ public class ProfileController {
     }
 
     @PostMapping("/subscribe")
-    public String subscribe(Authentication authentication, @RequestParam String creatorName) {
+    public String subscribe(Authentication authentication, @RequestParam String server, @RequestParam String creatorName) {
         String subscriberName = authentication.getName();
-        profileService.subscribe(creatorName, subscriberName);
+        profileService.subscribe(server, creatorName, subscriberName);
 
         return "redirect:/";
     }

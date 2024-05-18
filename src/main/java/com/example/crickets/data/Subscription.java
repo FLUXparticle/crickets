@@ -3,8 +3,10 @@ package com.example.crickets.data;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.*;
 
+import java.io.*;
+
 @Document(collection = "subscriptions")
-public class Subscription {
+public class Subscription implements Serializable {
     @Id
     private String id;
     @DBRef
