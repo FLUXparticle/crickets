@@ -33,10 +33,6 @@ public class ProfileService {
         this.hostname = hostname;
     }
 
-    public User getUser(String username) {
-        return getUser(null, username);
-    }
-
     public User getUser(String server, String username) {
         User user = userRepository.findByServerAndUsername(server, username);
 

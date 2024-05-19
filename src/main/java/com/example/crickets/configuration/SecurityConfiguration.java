@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import static org.springframework.security.config.Customizer.*;
+import static org.springframework.security.web.csrf.CookieCsrfTokenRepository.*;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +22,8 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
                 .formLogin(withDefaults())
+//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(config -> config.csrfTokenRepository(withHttpOnlyFalse()))
                 .build();
     }
 
