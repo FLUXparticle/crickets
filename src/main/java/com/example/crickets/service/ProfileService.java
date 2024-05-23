@@ -52,7 +52,7 @@ public class ProfileService {
         return subscriptionRepository.countByCreatorId(userId);
     }
 
-    public void subscribe(String creatorServer, String creatorName, String subscriberName) {
+    public boolean subscribe(String creatorServer, String creatorName, String subscriberName) {
         Subscription subscription;
         if (creatorServer.isEmpty()) {
             User creator = getUser(null, creatorName);
@@ -68,7 +68,10 @@ public class ProfileService {
 
         if (subscription != null) {
             subscriptionRepository.save(subscription);
+            return true;
         }
+
+        return false;
     }
 
     private Subscription sendSubscribeByHand(String creatorServer, String creatorName, String subscriberName) {

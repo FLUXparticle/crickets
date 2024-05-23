@@ -19,9 +19,19 @@
     <hr>
 
     <h2>Benutzer abonnieren</h2>
-    <form th:action="@{/subscribe}" method="post">
-        <input type="text" name="server" placeholder="Server">
-        <input type="text" name="creatorName" placeholder="Username">
+    <div th:if="${successes}">
+        <ul>
+            <li th:each="success : ${successes}" th:text="${success}">Erfolg</li>
+        </ul>
+    </div>
+    <div th:if="${errors}">
+        <ul>
+            <li th:each="error : ${errors}" th:text="${error}">Fehlermeldung</li>
+        </ul>
+    </div>
+    <form th:action="@{/subscribe}" th:object="${subscribeForm}" method="post">
+        <input type="text" th:field="*{server}" placeholder="Server">
+        <input type="text" th:field="*{creatorName}" placeholder="Username">
         <button type="submit">Abonnieren</button>
     </form>
 </div>
